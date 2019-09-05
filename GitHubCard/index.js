@@ -32,6 +32,7 @@ axios.get('https://api.github.com/users/mariehposa')
           user, and adding that card to the DOM.
 */
 
+const followersArray = [];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -53,6 +54,25 @@ axios.get('https://api.github.com/users/mariehposa')
 
 */
 
+function componentBuilder ({github}) {
+  const card = document.createElement('div');
+  card.classList.add('card');
+  const image = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  card.classList.add('card-info');
+  const name = document.createElement('h3');
+  name.classList.add('name');
+  const username = document.createElement('p');
+  username.classList.add('username');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const href = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+  
+}
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
