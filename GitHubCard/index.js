@@ -3,15 +3,6 @@
            https://api.github.com/users/<your name>
 */
 
-axios.get('https://lambda-github-api-server.herokuapp.com/')
-  .then(response => { 
-    console.log(response.data)
-    componentBuilder(response.data)
-  })
-  .catch(error => {
-    console.log(error)
-   })
-
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -33,7 +24,24 @@ axios.get('https://lambda-github-api-server.herokuapp.com/')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'emkayDauda'
+];
+
+followersArray.forEach(follower => {
+  axios.get(`https://api.github.com/users/${follower}`)
+  .then(response => { 
+    console.log(response.data)
+    document.querySelector('.cards').appendChild(componentBuilder(response.data))
+  })
+  .catch(error => {
+    console.log(error)
+   })
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -55,6 +63,16 @@ const followersArray = [];
 
 */
 
+//step 1
+axios.get('https://api.github.com/users/mariehposa')
+  .then(response => { 
+    console.log(response.data)
+  })
+  .catch(error => {
+    console.log(error)
+   })
+
+//step 2
 function componentBuilder (github) {
   const card = document.createElement('div');
   card.classList.add('card');
@@ -72,14 +90,28 @@ function componentBuilder (github) {
   const following = document.createElement('p');
   const bio = document.createElement('p');
 
-  image.setAttribute('src', github.avatar_url)
+  image.setAttribute('src', github.avatar_url);
   name.textContent = github.name;
   username.textContent = github.login;
   location.textContent = github.location;
-  href.setAttribute('href', github.html_url)
-  followers.textContent = github.followers;
-  following.textContent = github.following;
-  bio.textContent = github.bio;
+  profile.textContent = "Profile: "
+  href.setAttribute('href', github.html_url);
+  followers.textContent = `Followers: ${github.followers}`;
+  following.textContent = `Following: ${github.following}`;
+  bio.textContent = `Bio: ${github.bio}`;
+
+  profile.appendChild(href);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+  card.appendChild(image);
+  card.appendChild(cardInfo);
+
+  return card;
 }
 /* List of LS Instructors Github username's: 
   tetondan
