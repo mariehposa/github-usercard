@@ -3,9 +3,10 @@
            https://api.github.com/users/<your name>
 */
 
-axios.get('https://api.github.com/users/mariehposa')
+axios.get('https://lambda-github-api-server.herokuapp.com/')
   .then(response => { 
     console.log(response.data)
+    componentBuilder(response.data)
   })
   .catch(error => {
     console.log(error)
@@ -54,7 +55,7 @@ const followersArray = [];
 
 */
 
-function componentBuilder ({github}) {
+function componentBuilder (github) {
   const card = document.createElement('div');
   card.classList.add('card');
   const image = document.createElement('img');
@@ -71,7 +72,14 @@ function componentBuilder ({github}) {
   const following = document.createElement('p');
   const bio = document.createElement('p');
 
-  
+  image.setAttribute('src', github.avatar_url)
+  name.textContent = github.name;
+  username.textContent = github.login;
+  location.textContent = github.location;
+  href.setAttribute('href', github.html_url)
+  followers.textContent = github.followers;
+  following.textContent = github.following;
+  bio.textContent = github.bio;
 }
 /* List of LS Instructors Github username's: 
   tetondan
