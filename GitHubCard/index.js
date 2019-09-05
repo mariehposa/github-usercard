@@ -106,3 +106,22 @@ function componentBuilder (github) {
   return card;
 }
 
+//step 5
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'emkayDauda'
+];
+
+followersArray.forEach(follower => {
+  axios.get(`https://api.github.com/users/${follower}`)
+  .then(response => { 
+    console.log(response.data)
+    document.querySelector('.cards').appendChild(componentBuilder(response.data))
+  })
+  .catch(error => {
+    console.log(error)
+   })
+})
