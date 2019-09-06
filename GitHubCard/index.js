@@ -82,6 +82,12 @@ function componentBuilder (github) {
   const following = document.createElement('p');
   const bio = document.createElement('p');
   
+  const xtraInfo = document.createElement('div');
+  // xtraInfo.classList.add('card-info');
+  const company = document.createElement('p');
+  const repo = document.createElement('p');
+  const expandButton = document.createElement('span')
+  
   image.setAttribute('src', github.avatar_url);
   name.textContent = github.name;
   username.textContent = github.login;
@@ -92,6 +98,11 @@ function componentBuilder (github) {
   following.textContent = `Following: ${github.following}`;
   bio.textContent = `Bio: ${github.bio}`;
 
+  company.textContent = `Company: ${github.company}`;
+  repo.textContent = `Repositories: ${github.public_repos}`;
+  expandButton.textContent = 'Expand';
+  expandButton.classList.add('expandButton');
+
   profile.appendChild(href);
   cardInfo.appendChild(name);
   href.setAttribute('href', github.html_url);
@@ -101,8 +112,20 @@ function componentBuilder (github) {
   cardInfo.appendChild(followers);
   cardInfo.appendChild(following);
   cardInfo.appendChild(bio);
+
+  xtraInfo.appendChild(company);
+  xtraInfo.appendChild(repo);
+  xtraInfo.classList.add('expand');
+
   card.appendChild(image);
   card.appendChild(cardInfo);
+  
+  cardInfo.appendChild(xtraInfo);
+  cardInfo.appendChild(expandButton);
+
+  expandButton.addEventListener('click', e => {
+    xtraInfo.classList.toggle('expand');
+  })
 
   return card;
 }
