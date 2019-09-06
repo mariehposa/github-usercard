@@ -70,7 +70,7 @@ function componentBuilder (github) {
   card.classList.add('card');
   const image = document.createElement('img');
   const cardInfo = document.createElement('div');
-  card.classList.add('card-info');
+  cardInfo.classList.add('card-info');
   const name = document.createElement('h3');
   name.classList.add('name');
   const username = document.createElement('p');
@@ -81,19 +81,20 @@ function componentBuilder (github) {
   const followers = document.createElement('p');
   const following = document.createElement('p');
   const bio = document.createElement('p');
-
+  
   image.setAttribute('src', github.avatar_url);
   name.textContent = github.name;
   username.textContent = github.login;
-  location.textContent = github.location;
+  location.textContent = `Location: ${github.location}`;
   profile.textContent = "Profile: "
-  href.setAttribute('href', github.html_url);
+  href.textContent = github.html_url;
   followers.textContent = `Followers: ${github.followers}`;
   following.textContent = `Following: ${github.following}`;
   bio.textContent = `Bio: ${github.bio}`;
 
   profile.appendChild(href);
   cardInfo.appendChild(name);
+  href.setAttribute('href', github.html_url);
   cardInfo.appendChild(username);
   cardInfo.appendChild(location);
   cardInfo.appendChild(profile);
