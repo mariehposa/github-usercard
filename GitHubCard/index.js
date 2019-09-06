@@ -24,8 +24,6 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
 
@@ -53,3 +51,101 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+//step 1
+axios.get('https://api.github.com/users/mariehposa')
+  .then(response => { 
+    console.log(response.data)
+    //step 4
+    const componentContainer = componentBuilder(response.data)
+    document.querySelector('.cards').appendChild(componentContainer);
+  })
+  .catch(error => {
+    console.log(error)
+   })
+
+//step 3
+function componentBuilder (github) {
+  const card = document.createElement('div');
+  card.classList.add('card');
+  const image = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  cardInfo.classList.add('card-info');
+  const name = document.createElement('h3');
+  name.classList.add('name');
+  const username = document.createElement('p');
+  username.classList.add('username');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const href = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+  
+  const xtraInfo = document.createElement('div');
+  // xtraInfo.classList.add('card-info');
+  const company = document.createElement('p');
+  const repo = document.createElement('p');
+  const expandButton = document.createElement('span')
+  
+  image.setAttribute('src', github.avatar_url);
+  name.textContent = github.name;
+  username.textContent = github.login;
+  location.textContent = `Location: ${github.location}`;
+  profile.textContent = "Profile: "
+  href.textContent = github.html_url;
+  followers.textContent = `Followers: ${github.followers}`;
+  following.textContent = `Following: ${github.following}`;
+  bio.textContent = `Bio: ${github.bio}`;
+
+  company.textContent = `Company: ${github.company}`;
+  repo.textContent = `Repositories: ${github.public_repos}`;
+  expandButton.textContent = 'Expand';
+  expandButton.classList.add('expandButton');
+
+  profile.appendChild(href);
+  cardInfo.appendChild(name);
+  href.setAttribute('href', github.html_url);
+  cardInfo.appendChild(username);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(bio);
+
+  xtraInfo.appendChild(company);
+  xtraInfo.appendChild(repo);
+  xtraInfo.classList.add('expand');
+
+  card.appendChild(image);
+  card.appendChild(cardInfo);
+  
+  cardInfo.appendChild(xtraInfo);
+  cardInfo.appendChild(expandButton);
+
+  expandButton.addEventListener('click', e => {
+    xtraInfo.classList.toggle('expand');
+  })
+
+  return card;
+}
+
+//step 5
+const followersArray = [
+  'tetondan',
+  'dustinmyers',
+  'justsml',
+  'luishrd',
+  'emkayDauda'
+];
+
+followersArray.forEach(follower => {
+  axios.get(`https://api.github.com/users/${follower}`)
+  .then(response => { 
+    console.log(response.data)
+    document.querySelector('.cards').appendChild(componentBuilder(response.data))
+  })
+  .catch(error => {
+    console.log(error)
+   })
+})
